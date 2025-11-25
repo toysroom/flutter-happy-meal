@@ -26,12 +26,23 @@ class _FavoritesPageState extends State<FavoritesPage> {
     });
   }
 
+
+  void _removeMeal(Meal meal) {
+    favoritesStorage.removeMeal(meal);
+    loadFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: favoritesMeals.length,
       itemBuilder: (context, index) {
-        return Text(favoritesMeals[index].title);
+        return ListTile(
+          title: Text(favoritesMeals[index].title),
+          subtitle: Text('Duration: ${favoritesMeals[index].duration.toString()} min'),
+          leading: Image.network(favoritesMeals[index].imageUrl, width: 100, height: 100, fit: BoxFit.contain,),
+          trailing: IconButton(onPressed: () =>_removeMeal(favoritesMeals[index]), icon: Icon(Icons.delete)),
+        );
       },
     );
   }

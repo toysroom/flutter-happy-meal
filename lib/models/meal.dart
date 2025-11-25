@@ -90,4 +90,9 @@ class Meal {
       "isLactoseFree": isLactoseFree
     };
   }
+
+  @override
+  toString() {  
+    return 'Meal(id: $id, categories: $categories, title: $title, affordability: $affordability, complexity: $complexity, imageUrl: $imageUrl, duration: $duration, ingredients: $ingredients, steps: $steps, isGlutenFree: $isGlutenFree, isVegan: $isVegan, isVegetarian: $isVegetarian, isLactoseFree: $isLactoseFree)';
+  }
 }

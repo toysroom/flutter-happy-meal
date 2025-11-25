@@ -17,9 +17,14 @@ class _MealDetailsPageState extends State<MealDetailsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     favoritesStorage = FavoritesStorage();
+    favoritesStorage.getMeal(widget.meal).then((value) {
+      if (!mounted) return;
+      setState(() {
+        isFavorite = value;
+      });
+    });
   }
 
   void _handleToogleFavorite() {
@@ -27,13 +32,24 @@ class _MealDetailsPageState extends State<MealDetailsPage> {
       isFavorite = !isFavorite;
     });
 
-    favoritesStorage.saveMeal(widget.meal);
+    // favoritesStorage.saveMeal(widget.meal);
+
+    // late String message;
+    // if (isFavorite) {
+    //   favoritesStorage.saveMeal(widget.meal);
+    //   // message = "piatto aggiunto";
+    // } else {
+    //   // message = "piatto rimosso";
+    //   favoritesStorage.removeMeal(widget.meal);
+    // }
+
+    (isFavorite) ? favoritesStorage.saveMeal(widget.meal) : favoritesStorage.removeMeal(widget.meal);
 
     final messanger = ScaffoldMessenger.of(context);
     messanger.hideCurrentSnackBar();
     messanger.showSnackBar(
       SnackBar(
-        content: Text("piatto aggiunto o tolto"),
+        content: Text((isFavorite) ? "piatto aggiunto" : "piatto rimosso"),
         duration: Duration(
           seconds: 2,
         ),
